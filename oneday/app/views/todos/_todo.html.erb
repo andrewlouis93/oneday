@@ -1,0 +1,4 @@
+	<li>
+		<strong><%= todo.name %></strong>
+		<small><%= link_to "Mark as done", todo_path(todo.id), :method => :put %></small>
+	</li>

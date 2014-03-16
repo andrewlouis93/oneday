@@ -1,0 +1,5 @@
+<% if @todo.valid? %>
+	$(".todos").append('<%= j(render(@todo)) %>');
+<% else %> 
+	alert('Something went wrong!');
+<% end %>
