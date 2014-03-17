@@ -10,12 +10,9 @@
 
 <h3> TO DO </h3>
 <ul class="todos">
-	<% @todos.each do |t| %>
-		<li>
-			<strong><%= t.name %></strong>
-			<small><%= link_to "Mark as done", todo_path(t), :confirm => "You sure?", :method => :put %></small>
-		</li>
-	<% end %>
+		<% @todos.each do |t| %>
+			<%= render partial: "todo", object:t  %>
+		<% end %>
 </ul>
 
 <h3> DONE </h3>

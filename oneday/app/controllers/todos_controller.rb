@@ -20,6 +20,7 @@ class TodosController < ApplicationController
 	    respond_to do |format|
 	        if @todo.save
 	            format.js
+	            format.html { redirect_to todos_path, :notice => "Your todo item was created!" }
 	        else
 	            render "new"
 	        end
