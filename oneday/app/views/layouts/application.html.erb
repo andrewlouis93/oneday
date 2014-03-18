@@ -34,6 +34,25 @@
 <% end %> 
 
 <%= yield %>
+  <script>
 
+  function sendAjaxCall(_id){
+  	  	//Actual AJAX call
+	  	$.ajax({
+	    	type: "PUT",
+	        url: "/todos/"+_id+"?_method=PUT",
+		});
+  }
+  $(document).ready(function(){
+  	$(".todos").on('click','.todo',function(e){
+  		console.log("Hello");
+  		if ($(this).children('input').is(":checked")){
+  			var _id = $(this).attr('id');
+  			sendAjaxCall(_id);
+  		}
+  		e.preventDefault();
+  	});	
+  });
+  </script>
 </body>
 </html>

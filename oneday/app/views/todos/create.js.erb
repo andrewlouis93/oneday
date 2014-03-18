@@ -1,5 +1,7 @@
 <% if @todo.valid? %>
 	$(".todos").append('<%= j(render(@todo)) %>');
+	$(".ajax_submit").val('')
 <% else %> 
+	$(".ajax_submit").val('')
 	alert('Something went wrong!');
 <% end %>

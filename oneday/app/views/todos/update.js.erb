@@ -1,0 +1,7 @@
+<% if @todo.valid? %>
+	console.log("in here");
+	$("#"+"<%= @todo.id %>").fadeOut()
+	$(".todones").prepend('<li>hello</li>');
+<% else %> 
+	console.log("or here");
+<% end %>
