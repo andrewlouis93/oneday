@@ -1,7 +1,7 @@
 <% if @todo.valid? %>
 	console.log("in here");
-	$("#"+"<%= @todo.id %>").fadeOut()
-	$(".todones").prepend('<li>hello</li>');
+	$("#"+"<%= @todo.id %>").fadeOut(500)
+	$('<%= j(render :partial=>"todone", locals:{todo: @todo}) %>').prependTo(".todones").hide().fadeIn(500);
 <% else %> 
 	console.log("or here");
 <% end %>

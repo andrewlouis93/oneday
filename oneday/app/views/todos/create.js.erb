@@ -1,5 +1,5 @@
 <% if @todo.valid? %>
-	$(".todos").append('<%= j(render(@todo)) %>');
+	$('<%= j(render(@todo)) %>').hide().appendTo(".todos").fadeIn(500);
 	$(".ajax_submit").val('')
 <% else %> 
 	$(".ajax_submit").val('')

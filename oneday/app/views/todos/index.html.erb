@@ -17,18 +17,17 @@
 <h3> TO DO </h3>
 <ul class="todos list-group">
 		<% @todos.each do |t| %>
-			<%= render partial: "todo"  %>
+			<%= render partial: "todo", locals: {todo: t}  %>
 		<% end %>
 </ul>
 
 <h3> DONE </h3>
-<ul class="todones">
+<ul class="todones list-group">
 <% @todones.each do |t| %>
-	<li>
-		<strong><%= t.name %></strong>
-		<small><%= link_to "Remove", t, :confirm => "You sure?", :method => :delete %></small>
-	</li>
+	<%= render partial: "todone", locals: {todo: t} %>
 <% end %>
 </ul>
 
+<!--
 <%= link_to "Add new task", new_todo_path %>
+-->
