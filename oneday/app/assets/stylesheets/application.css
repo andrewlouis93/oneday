@@ -78,9 +78,33 @@ body {
 	float:right;
 }
 
-.sign_forms {
-	border-radius:5px;
-	width:400px;
-	height:400px;
-	background:white;
+.logo {
+	margin-top:5%;
+	color:white;
+	font-family: Helvetica;
+	text-align: center;
+	letter-spacing: -5px;
+	font-size: 4em;
+	font-weight: bold;
 }
+
+.sign_forms {
+	color:white;
+	font-family:Helvetica;
+	border-radius:5px;
+	width:50%;
+	height:25%;
+	margin-left:auto;
+	margin-right:auto;
+	padding:25px;
+	background:rgba(0,0,0,0.4);
+}
+
+.help-block-override {
+	margin: 0 auto !important;
+}
+
+.help-block-override:hover {
+	text-decoration: none;
+}
+
