@@ -130,7 +130,7 @@ input[type=checkbox] {
 }
 
 .main_container {
-	margin-top:	5%;
+	margin-top:	3%;
 	margin-left:auto;
 	margin-right:auto;
 	width:60%;
@@ -180,3 +180,8 @@ input[type=checkbox] {
 	height:130px;
 	overflow-y:auto;
 }
+
+.navbar-header{margin-top:-5px;}
+.navbar-nav > li > a {height:41px !important;padding-top:10px !important; padding-bottom:8px !important;}
+.navbar {height:42px !important; min-height:20px !important}
+.dropdown-menu {width:100% !important;}

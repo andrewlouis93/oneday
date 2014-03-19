@@ -16,8 +16,10 @@
 </head>
 <body>
 <% if user_signed_in? %> 
+  <!--
 	You are currently signed in as <%= current_user.email %>, not you?
 	<%= link_to "Sign Out", destroy_user_session_path, :method=> :delete %>
+-->
 <% else %>
 	<h1 id="logo">one day</h1>
 	<div id="sign_container">
