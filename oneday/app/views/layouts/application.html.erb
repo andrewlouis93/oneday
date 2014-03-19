@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>one day</title>
+  <title>six tasks</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <!-- Latest compiled and minified CSS -->
@@ -12,13 +12,18 @@
 
   <!-- Latest compiled and minified JavaScript -->
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>  
+
+  <!-- jQuery UI -->
+  <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
 <% if user_signed_in? %> 
   <%= render partial: "nav" %>
 <% else %>
-	<h1 id="logo">one day</h1>
+	<h1 id="logo">six tasks</h1>
 	<div id="sign_container">
 		<div id="sign_up" class="sign">
 			<%= link_to "S I G N&nbsp;&nbsp;U P".html_safe, new_user_registration_path %>
@@ -108,9 +113,13 @@
     destroyTask();
     TodonesToggler();
     
+    $(".todos").sortable({ axis: "y" });
 
-    <% if @todones.empty? %>
-          $("#done").css('display','none');    
+
+    <% if @todones %>
+          <% if @todones.empty? %>
+            $("#done").css('display','none');    
+          <% end %>  
     <% end %>
 
     /*

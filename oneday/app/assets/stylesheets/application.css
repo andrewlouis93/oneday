@@ -46,12 +46,44 @@ input[type=checkbox] {
 	font-weight: bold;
 }
 
-#sign_container {
-	margin-top:20%;
-	display: inline-block;
-	width:20%;
-	margin:0 auto;
-	display:block;
+@media (max-width: 540px) and (min-width: 0px) { 
+	#sign_container {
+		margin-top:20%;
+		display: inline-block;
+		width:55%;
+		margin:0 auto;
+		display:block;
+	}
+}
+
+@media (max-width: 740px) and (min-width: 540px) { 
+	#sign_container {
+		margin-top:20%;
+		display: inline-block;
+		width:40%;
+		margin:0 auto;
+		display:block;
+	}
+}
+
+@media (max-width: 1024px) and (min-width: 740px) { 
+	#sign_container {
+		margin-top:20%;
+		display: inline-block;
+		width:30%;
+		margin:0 auto;
+		display:block;
+	}
+}
+
+@media (min-width: 1024px) { 
+	#sign_container {
+		margin-top:20%;
+		display: inline-block;
+		width:25%;
+		margin:0 auto;
+		display:block;
+	}
 }
 
 .sign {
@@ -169,6 +201,18 @@ input[type=checkbox] {
 	/*For half resolution, 40px*/
 	height: 267px;
 	overflow-y: auto;	
+}
+
+.todo {
+	cursor: url(https://mail.google.com/mail/images/2/openhand.cur), default !important;
+}
+
+.todo:active {
+    cursor: url(https://mail.google.com/mail/images/2/closedhand.cur), default !important;
+}
+
+.todo-text {
+	padding-right:5px !important;
 }
 
 .todones {
