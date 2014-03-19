@@ -36,22 +36,51 @@
 <%= yield %>
   <script>
 
-  function sendAjaxCall(_id){
+  function sendAjaxUpdate(_id){
   	  	//Actual AJAX call
 	  	$.ajax({
 	    	type: "PUT",
 	        url: "/todos/"+_id+"?_method=PUT",
 		});
   }
+
+  function sendAjaxDelete(_id){
+        //Actual AJAX call
+      $.ajax({
+        type: "DELETE",
+          url: "/todos/"+_id+"?_method=DELETE",
+    });
+  }  
+  
+  function TodosComplete(){
+      $(".todos").on('click','.todo',function(e){
+      if ($(this).children('input').is(":checked")){
+        var _id = $(this).attr('data-id');
+        sendAjaxUpdate(_id);
+      }
+    }); 
+  }
+
+  function TodonesUncomplete(){
+      $(".todones").on('click','.todone',function(e){
+      if ($(this).children('input').is(":checked") == false){
+        var _id = $(this).attr('data-id');
+        sendAjaxUpdate(_id);
+      }
+    }); 
+  }
+
+  function destroyTask(){
+      $(".todones").on('click','.remove',function(e){
+        var _id = $(this).parent().attr('data-id');
+        sendAjaxDelete(_id);
+      }); 
+  }
+
   $(document).ready(function(){
-  	$(".todos").on('click','.todo',function(e){
-  		console.log("Hello");
-  		if ($(this).children('input').is(":checked")){
-  			var _id = $(this).attr('id');
-  			sendAjaxCall(_id);
-  		}
-  		e.preventDefault();
-  	});	
+    TodosComplete();
+    TodonesUncomplete();
+    destroyTask();
   });
   </script>
 </body>

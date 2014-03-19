@@ -23,9 +23,9 @@
 
 <h3> DONE </h3>
 <ul class="todones list-group">
-<% @todones.each do |t| %>
-	<%= render partial: "todone", locals: {todo: t} %>
-<% end %>
+		<% @todones.each do |t| %>
+			<%= render partial: "todone", locals: {todo: t} %>
+		<% end %>
 </ul>
 
 <!--

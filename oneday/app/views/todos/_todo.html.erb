@@ -1,5 +1,4 @@
-	<li id="<%= todo.id %>" class="list-group-item todo">
+	<li data-id="<%= todo.id %>" class="list-group-item todo">
 		<strong><%= todo.name %></strong>
 		<input class="status" type="checkbox">
-		<small><%= link_to "Mark as done", todo_path(todo.id), :method => :put %></small>
 	</li>

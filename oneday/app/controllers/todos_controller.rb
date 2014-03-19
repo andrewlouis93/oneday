@@ -31,20 +31,29 @@ class TodosController < ApplicationController
 		@todo = Todo.find(params[:id])
 
 	    respond_to do |format|
-	        if @todo.update_attribute(:done, true)
-	            format.js
+			if @todo.done
+				@todo.update_attribute(:done, false)
+				format.js
 	            format.html {redirect_to todos_path, :notice => "Your todo item was marked done!"}
-	        else
+			elsif @todo.done == false
+				@todo.update_attribute(:done, true)
+	            format.js
+	            format.html {redirect_to todos_path, :notice => "Your todo item was marked done!"}				
+			else
 	            redirect_to todos_path, :notice => "Couldn't update your task"
-	        end
+			end	    	
 	    end
 	end
 
 	def destroy
 		@todo = Todo.find(params[:id])
-		@todo.destroy
 
-		redirect_to todos_path, :notice => "Your todo item was deleted"
+	    respond_to do |format|
+	   	  format.js
+	      format.html { redirect_to todos_path, :notice => "Your todo item was deleted" }
+	    end
+
+	    @todo.destroy
 	end
 
 end
