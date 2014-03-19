@@ -141,10 +141,20 @@ input[type=checkbox] {
 	background-color: rbga(255,255,255,0.5) !important;
 }
 
-.task_bar {
-	margin-left:auto;
-	margin-right:auto;
-	width:60%;
+@media (max-width: 768px) and (min-width: 0px) { 
+	.task_bar {
+		margin-left:auto !important;
+		margin-right:auto !important;
+		width:100% !important;
+	}
+}
+
+@media (min-width: 768px) { 
+	.task_bar {
+		margin-left:auto !important;
+		margin-right:auto !important;
+		width:60% !important;
+	}
 }
 
 .task_bar input {
@@ -157,10 +167,35 @@ input[type=checkbox] {
 
 .todos {
 	/*For half resolution, 40px*/
+	height: 267px;
+	overflow-y: auto;	
 }
 
-#done {
-	margin-bottom: 17px;
+.todones {
+	height:133px;
+	overflow-y:auto;
+}
+
+@media (max-width: 768px) and (min-width: 0px) { 
+	#done {
+		width: 93%;
+		font-size: 24px;
+		margin-top:15px;
+		margin-left:auto;
+		margin-right:auto;
+		margin-bottom: 17px;
+	}
+}
+
+@media (min-width: 768px) { 
+	#done {
+		width: 96%;
+		font-size: 24px;
+		margin-top:15px;
+		margin-left:auto;
+		margin-right:auto;
+		margin-bottom: 17px;
+	}
 }
 
 .semi_title{
@@ -173,19 +208,14 @@ input[type=checkbox] {
 
 #todo_container {
 	margin-top:40px;
-	height: 267px;
-	overflow-y: auto;
-}
-
-#todone_container {
-	height:133px;
-	overflow-y:auto;
 }
 
 #hide-toggle{
+	margin-top: 5px;
 	font-size: 0.7em;
-	left: 37%;	
+	float: right;	
 }
+
 li.todone {
 	background: rgba(255,255,255,0.5) !important;
 }

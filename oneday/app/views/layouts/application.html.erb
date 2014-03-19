@@ -55,10 +55,18 @@
     var current = parseFloat($("#done-count").html());
     if (str == "add"){
       $("#done-count").html(current + 1);
+      $("#done").fadeIn();        
     }
     else if (str == "sub"){
-      $("#done-count").html(current - 1);
+
+      if ((current - 1) == 0){
+        $("#done").fadeOut();        
+      }
+      $("#done-count").html(current - 1); 
     }
+
+    //Post addition/subtraction
+    current = parseFloat($("#done-count").html());
   }  
   
   function TodosComplete(){
@@ -88,10 +96,34 @@
       }); 
   }
 
+  function TodonesToggler(){
+    $("#hide-toggle").click(function(){
+      $(".todones").fadeToggle();
+    });
+  }  
+
   $(document).ready(function(){
     TodosComplete();
     TodonesUncomplete();
     destroyTask();
+    TodonesToggler();
+    
+
+    <% if @todones.empty? %>
+          $("#done").css('display','none');    
+    <% end %>
+
+    /*
+    setInterval(function(){
+      if ($(".todones li").filter(':visible').length == 0){
+        $("#done").fadeOut("fast"); 
+      }
+      else {
+        $("#done").fadeIn(); 
+      }
+    },1);
+    */
+    
   });
   </script>
 </body>

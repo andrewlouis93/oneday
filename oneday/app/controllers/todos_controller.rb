@@ -4,6 +4,7 @@ class TodosController < ApplicationController
 		@todo = Todo.new
 		@todos = Todo.where(done:false,user:current_user.email)
 		@todones = Todo.where(done:true,user:current_user.email).order('updated_at DESC')
+		@todones = @todones.where("created_at >= ?", Time.zone.now.beginning_of_day)
 	end
 
 	def new
