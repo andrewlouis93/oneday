@@ -35,6 +35,7 @@ input[type=checkbox] {
 	height: 2em;
 }
 
+
 #logo {
 	margin-top:10%;
 	color:white;
@@ -128,6 +129,54 @@ input[type=checkbox] {
 	float: right;
 }
 
+.main_container {
+	margin-top:	5%;
+	margin-left:auto;
+	margin-right:auto;
+	width:60%;
+}
 
+.list-group-item {
+	margin-top:3px;
+}
 
+.task_bar {
+	margin-left:auto;
+	margin-right:auto;
+	width:60%;
+}
 
+.task_bar input {
+	height:2.5em;
+}
+
+.task_bar span button{
+	height:2.5em;
+}
+
+.todos {
+	/*For half resolution, 40px*/
+}
+
+#done {
+	margin-bottom: 17px;
+}
+
+.semi_title{
+	letter-spacing: -1px;
+	font-family: Helvetica;
+	font-weight: bold;
+	color: white;
+	text-align: center;
+}
+
+#todo_container {
+	margin-top:40px;
+	height: 267px;
+	overflow-y: auto;
+}
+
+#todone_container {
+	height:130px;
+	overflow-y:auto;
+}

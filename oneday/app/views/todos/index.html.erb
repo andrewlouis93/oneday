@@ -1,33 +1,38 @@
-<h1>TASKS</h1>
+<div class="main_container">
+	<!--
+		<h1>TASKS</h1>
+	-->
+	<%= form_for @todo, :remote => true do |f| %>
+		<div class="input-group task_bar">
+			<%= f.text_field :name, :class=>"ajax_submit form-control", :placeholder=>"Read 10 pages of Infinite Jest", :required => true %>
+		    <span class="input-group-btn">
+		      <button name="commit" type="submit" class="btn btn-default">
+		      	<i class="glyphicon glyphicon-plus"></i>
+		      </button>
+		    </span>
+		</div>
+		<%= f.hidden_field :done, :value=>false %>
+		<%= f.hidden_field :user, :value=>current_user.email %>
+	<% end %>
 
-
-<%= form_for @todo, :remote => true do |f| %>
-	<div class="input-group">
-		<%= f.text_field :name, :class=>"ajax_submit form-control", :placeholder=>"Add task", :required => true %>
-	    <span class="input-group-btn">
-	      <button name="commit" type="submit" class="btn btn-default">
-	      	<i class="glyphicon glyphicon-plus"></i>
-	      </button>
-	    </span>
+	<div id="todo_container">
+		<ul class="todos list-group">
+				<% @todos.each do |t| %>
+					<%= render partial: "todo", locals: {todo: t}  %>
+				<% end %>
+		</ul>
 	</div>
-	<%= f.hidden_field :done, :value=>false %>
-	<%= f.hidden_field :user, :value=>current_user.email %>
-<% end %>
 
-<h3> TO DO </h3>
-<ul class="todos list-group">
-		<% @todos.each do |t| %>
-			<%= render partial: "todo", locals: {todo: t}  %>
-		<% end %>
-</ul>
+	<h3 id="done" class="semi_title"> done </h3>
 
-<h3> DONE </h3>
-<ul class="todones list-group">
-		<% @todones.each do |t| %>
-			<%= render partial: "todone", locals: {todo: t} %>
-		<% end %>
-</ul>
-
+	<div id="todone_container">
+		<ul class="todones list-group">
+				<% @todones.each do |t| %>
+					<%= render partial: "todone", locals: {todo: t} %>
+				<% end %>
+		</ul>
+	</div>
+</div>
 <!--
 <%= link_to "Add new task", new_todo_path %>
 -->

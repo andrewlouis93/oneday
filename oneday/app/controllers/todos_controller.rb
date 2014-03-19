@@ -3,7 +3,9 @@ class TodosController < ApplicationController
 	def index
 		@todo = Todo.new
 		@todos = Todo.where(done:false,user:current_user.email)
-		@todones = Todo.where(done:true,user:current_user.email)
+		
+		@todones = Todo.where(done:true,user:current_user.email).order('updated_at DESC')
+		@todones
 	end
 
 	def new
