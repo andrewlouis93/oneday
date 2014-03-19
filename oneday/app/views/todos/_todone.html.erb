@@ -1,8 +1,9 @@
 <li data-id="<%= todo.id %>" class="list-group-item todone">
+	<input class="status" type="checkbox" checked>
+	
 	<strong><%= todo.name %></strong>
 	<!--
 	<small><%= link_to "Remove", todo, :method => :delete, :class => "remove" %></small>
 	-->
-	<div class="remove">Remove</div>
-	<input class="status" type="checkbox" checked>
+	<span class="remove glyphicon glyphicon-remove"></span>
 </li>
