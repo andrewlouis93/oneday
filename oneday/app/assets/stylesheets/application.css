@@ -138,6 +138,7 @@ input[type=checkbox] {
 
 .list-group-item {
 	margin-top:3px;
+	background-color: rbga(255,255,255,0.5) !important;
 }
 
 .task_bar {
@@ -177,10 +178,21 @@ input[type=checkbox] {
 }
 
 #todone_container {
-	height:130px;
+	height:133px;
 	overflow-y:auto;
 }
 
+#hide-toggle{
+	font-size: 0.7em;
+	left: 37%;	
+}
+li.todone {
+	background: rgba(255,255,255,0.5) !important;
+}
+
+#hide-toggle:hover{
+	cursor: pointer;
+}
 .navbar-header{margin-top:-5px;}
 .navbar-nav > li > a {height:41px !important;padding-top:10px !important; padding-bottom:8px !important;}
 .navbar {height:42px !important; min-height:20px !important}

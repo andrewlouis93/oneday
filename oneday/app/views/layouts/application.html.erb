@@ -16,10 +16,7 @@
 </head>
 <body>
 <% if user_signed_in? %> 
-  <!--
-	You are currently signed in as <%= current_user.email %>, not you?
-	<%= link_to "Sign Out", destroy_user_session_path, :method=> :delete %>
--->
+  <%= render partial: "nav" %>
 <% else %>
 	<h1 id="logo">one day</h1>
 	<div id="sign_container">
@@ -52,6 +49,16 @@
         type: "DELETE",
           url: "/todos/"+_id+"?_method=DELETE",
     });
+  }
+
+  function updateDoneCount(str){
+    var current = parseFloat($("#done-count").html());
+    if (str == "add"){
+      $("#done-count").html(current + 1);
+    }
+    else if (str == "sub"){
+      $("#done-count").html(current - 1);
+    }
   }  
   
   function TodosComplete(){
@@ -59,6 +66,7 @@
       if ($(this).children('input').is(":checked")){
         var _id = $(this).attr('data-id');
         sendAjaxUpdate(_id);
+        updateDoneCount("add");
       }
     }); 
   }
@@ -68,12 +76,13 @@
       if ($(this).children('input').is(":checked") == false){
         var _id = $(this).attr('data-id');
         sendAjaxUpdate(_id);
+        updateDoneCount("sub");
       }
     }); 
   }
 
   function destroyTask(){
-      $(".todones").on('click','.remove',function(e){
+      $(".todos").on('click','.remove',function(e){
         var _id = $(this).parent().attr('data-id');
         sendAjaxDelete(_id);
       }); 
