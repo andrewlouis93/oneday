@@ -1,41 +1,19 @@
 <div class="logo">one day</div>
 
-<div class="sign_forms input-group">
-	<%= form_for(resource, :as => resource_name, html: {:class => "form-horizontal"}, :url => registration_path(resource_name)) do |f| %>
-	  <%= devise_error_messages! %>
+<div id="sign_up_form" class="sign_forms">
+	<%= form_for(resource, :as => resource_name,  html: {:class => "form-horizontal"}, :url => registration_path(resource_name)) do |f| %>
+	<%= devise_error_messages! %>
+    <div class="container">
 
-	  <div class="form-group">
-	  		<%= f.label :email, :class=>'col-sm-2 control-label' %>
-	  		<div class="col-sm-10">
-	  			<%= f.email_field :email, :placeholder=>'Email', :class=>'form-control', :autofocus => true %>
-	  		</div>	
-	  </div>
-	
-	  <br />
+      <form class="form-signin" role="form">
+		 <%= f.email_field :email, :placeholder=>'Email', :class=>'form-control', :autofocus => true %>
+		 <%= f.password_field :password, :placeholder=>'Password', :class=>'form-control', :required=>true %>
+		 <%= f.password_field :password_confirmation, :placeholder=>'Password confirmation', :class=>'form-control', :required=>true %>	
+		
+		<button style="margin-top:20px;" type="submit" name="commit" class="btn btn-lg btn-default btn-block btn-outline">Sign Up</button>
+      </form>
 
-	  <div class="form-group">
-		  <%= f.label :password, :class=>'col-sm-2 control-label' %>
-		  <div class="col-sm-10">
-		  	<%= f.password_field :password, :placeholder=>'Password', :class=>'form-control' %>
-		  </div>
-	  </div>
-
-	  <br />
-
-	  <div class="form-group">
-		  <%= f.label :confirmation, :class=>'col-sm-2 control-label'  %>
-		  <div class="col-sm-10">
-		 	 <%= f.password_field :password_confirmation, :placeholder=>'Password confirmation', :class=>'form-control' %>
-		  </div>
-	  </div>
-
-	  <br />
-
-	  <div class="form-group">
-	  	<div class="col-sm-offset-2 col-sm-10">
-	    	<button type="submit" name="commit" class="btn btn-default">Sign Up</button>
-	    </div>
-	  </div>
+    </div> <!-- /container -->
 	<% end %>
 
 	<%= render "devise/shared/links" %>

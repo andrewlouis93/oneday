@@ -25,9 +25,9 @@ body {
     height: 100%;
 }
 
+
 input[type=checkbox] {
 	margin-top:-3px !important;
-	margin-left: 0 !important;
 	margin-right: 0 !important;
 	margin-bottom: 0 !important;
 	float: left;
@@ -35,6 +35,17 @@ input[type=checkbox] {
 	height: 2em;
 }
 
+.font-400 {
+	font-weight:400;
+}
+
+.container input{
+	border-radius:5px;
+}
+
+#remember_checkbox{
+	margin-top:-1px !important;
+}
 
 #logo {
 	margin-top:10%;
@@ -74,6 +85,11 @@ input[type=checkbox] {
 		margin:0 auto;
 		display:block;
 	}
+
+	.navbar-header{margin-top:-5px;}
+	.dropdown-menu {width:100% !important;}	
+	.navbar-nav > li > a {height:41px !important;padding-top:10px !important; padding-bottom:8px !important;}
+	.navbar {height:42px !important; min-height:20px !important}
 }
 
 @media (min-width: 1024px) { 
@@ -84,6 +100,11 @@ input[type=checkbox] {
 		margin:0 auto;
 		display:block;
 	}
+	
+	.navbar-header{margin-top:-5px;}
+	.dropdown-menu {width:100% !important;}	
+	.navbar-nav > li > a {height:41px !important;padding-top:10px !important; padding-bottom:8px !important;}
+	.navbar {height:42px !important; min-height:20px !important}
 }
 
 .sign {
@@ -135,16 +156,31 @@ input[type=checkbox] {
 	color:white;
 	font-family:Helvetica;
 	border-radius:5px;
-	width:50%;
-	height:25%;
+
 	margin-left:auto;
 	margin-right:auto;
 	padding:25px;
 	background:rgba(0,0,0,0.4);
 }
 
+#sign_in_form {
+	width: 50%;
+	height: 40%;
+}
+
+#sign_up_form {
+	width:50%;
+	height: 40%;
+}
+
+#forgot_password_form {
+	width:50%;
+	height: 33%;
+}
+
 .help-block-override {
-	margin: 0 auto !important;
+	margin-top:5px;
+	margin-left:20px;
 }
 
 .help-block-override:hover {
@@ -267,7 +303,3 @@ li.todone {
 #hide-toggle:hover{
 	cursor: pointer;
 }
-.navbar-header{margin-top:-5px;}
-.navbar-nav > li > a {height:41px !important;padding-top:10px !important; padding-bottom:8px !important;}
-.navbar {height:42px !important; min-height:20px !important}
-.dropdown-menu {width:100% !important;}
