@@ -2,7 +2,7 @@
 
 <div id="sign_in_form" class="sign_forms">
 	<%= form_for(resource, :as => resource_name,  html: {:class => "form-horizontal"}, :url => session_path(resource_name)) do |f| %>
-    <div class="container">
+    <div style="width:100% !important;"class="container">
 
       <form class="form-signin" role="form">
 		 <%= f.email_field :email, :placeholder=>'Email', :class=>'form-control', :autofocus => true %>
