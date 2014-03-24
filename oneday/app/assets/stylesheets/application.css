@@ -193,17 +193,17 @@ input[type=checkbox] {
 
 #sign_in_form {
 	width: 50%;
-	height: 45%;
+	height: 250px;
 }
 
 #sign_up_form {
 	width:50%;
-	height: 45%;
+	height: 250px;
 }
 
 #forgot_password_form {
 	width:50%;
-	height: 37%;
+	height: 210px;
 }
 
 .help-block-override {
