@@ -28,8 +28,8 @@ body {
 
 
 input[type=checkbox] {
-	margin-top:-3px !important;
-	margin-right: 2px !important;
+	margin-top: 0px !important;
+	margin-right: 11px !important;
 	margin-bottom: 0 !important;
 	float: left;
 	width: 1.5em;
@@ -194,17 +194,17 @@ input[type=checkbox] {
 
 #sign_in_form {
 	width: 50%;
-	height:250px;
+	height: 250px;
 }
 
 #sign_up_form {
 	width:50%;
-	height:250px;
+	height: 250px;
 }
 
 #forgot_password_form {
 	width:50%;
-	height:210px;
+	height: 210px;
 }
 
 .help-block-override {
