@@ -26,14 +26,36 @@ body {
     height: 100%;
 }
 
+ul li a {
+	cursor: pointer;
+}
 
 input[type=checkbox] {
 	margin-top: 0px !important;
 	margin-right: 11px !important;
 	margin-bottom: 0 !important;
-	float: left;
+	float: left; 
 	width: 1.5em;
 	height: 1.5em;
+}
+
+text {
+	font-weight: 100;
+}
+
+#graph_container {
+	margin-top: 20px;
+	height: 210px;	
+}
+
+.count {
+	width: 100%;
+	font-size:3em;
+	text-align: center;
+}
+
+.graph_tabs {
+	margin-top: 27px;
 }
 
 .font-400 {
@@ -241,6 +263,11 @@ input[type=checkbox] {
 		margin-right:auto !important;
 		width:100% !important;
 	}
+	.todos {
+		/*For half resolution, 40px*/
+		height: 249px;
+		overflow-y: auto;	
+	}
 }
 
 @media (min-width: 768px) { 
@@ -248,6 +275,12 @@ input[type=checkbox] {
 		margin-left:auto !important;
 		margin-right:auto !important;
 		width:60% !important;
+	}
+
+	.todos {
+		/*For half resolution, 40px*/
+		height: 267px;
+		overflow-y: auto;	
 	}
 }
 
@@ -257,12 +290,6 @@ input[type=checkbox] {
 
 .task_bar span button{
 	height:2.5em;
-}
-
-.todos {
-	/*For half resolution, 40px*/
-	height: 267px;
-	overflow-y: auto;	
 }
 
 .todo {

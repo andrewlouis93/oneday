@@ -1,3 +1,88 @@
+  <script>
+	  function sendAjaxUpdate(_id){
+	  	  	//Actual AJAX call
+		  	$.ajax({
+		    	type: "PUT",
+		        url: "/todos/"+_id+"?_method=PUT",
+			});
+	  }
+
+	  function sendAjaxDelete(_id){
+	        //Actual AJAX call
+	      $.ajax({
+	        type: "DELETE",
+	          url: "/todos/"+_id+"?_method=DELETE",
+	    });
+	  }
+
+	  function updateDoneCount(str){
+	    var current = parseFloat($("#done-count").html());
+	    if (str == "add"){
+	      $("#done-count").html(current + 1);
+	      $("#done").fadeIn();        
+	    }
+	    else if (str == "sub"){
+
+	      if ((current - 1) == 0){
+	        $("#done").fadeOut();        
+	      }
+	      $("#done-count").html(current - 1); 
+	    }
+
+	    //Post addition/subtraction
+	    current = parseFloat($("#done-count").html());
+	  }  
+	  
+	  function TodosComplete(){
+	      $(".todos").on('click','.todo',function(e){
+	      if ($(this).children('input').is(":checked")){
+	        var _id = $(this).attr('data-id');
+	        sendAjaxUpdate(_id);
+	        updateDoneCount("add");
+	      }
+	    }); 
+	  }
+
+	  function TodonesUncomplete(){
+	      $(".todones").on('click','.todone',function(e){
+	      if ($(this).children('input').is(":checked") == false){
+	        var _id = $(this).attr('data-id');
+	        sendAjaxUpdate(_id);
+	        updateDoneCount("sub");
+	      }
+	    }); 
+	  }
+
+	  function destroyTask(){
+	      $(".todos").on('click','.remove',function(e){
+	        var _id = $(this).parent().attr('data-id');
+	        sendAjaxDelete(_id);
+	      }); 
+	  }
+
+	  function TodonesToggler(){
+	    $("#hide-toggle").click(function(){
+	      $(".todones").fadeToggle();
+	    });
+	  }  
+
+	  $(document).ready(function(){
+	    TodosComplete();
+	    TodonesUncomplete();
+	    destroyTask();
+	    TodonesToggler();
+	    
+	    $(".todos").sortable({ axis: "y" });
+
+
+	    <% if @todones %>
+	          <% if @todones.empty? %>
+	            $("#done").css('display','none');    
+	          <% end %>  
+	    <% end %>    
+	  });
+  </script>
+
 <div class="main_container">
 	<!--
 		<h1>TASKS</h1>

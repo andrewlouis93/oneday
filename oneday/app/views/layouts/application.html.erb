@@ -10,6 +10,9 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
+  <!-- nvd3 css  -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.min.css">
+
   <!-- Latest compiled and minified JavaScript -->
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>  
 
@@ -18,7 +21,26 @@
 
   <!-- Support for touch devices -->
   <script src="//cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+  <!-- Graphing shit -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.min.js"></script>
+
+  <!-- Time support -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+
   
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38690992-5', 'heroku.com');
+  ga('send', 'pageview');
+
+</script>
 
   <%= csrf_meta_tags %>
 </head>
@@ -41,102 +63,6 @@
 <% end %> 
 
 <%= yield %>
-  <script>
 
-  function sendAjaxUpdate(_id){
-  	  	//Actual AJAX call
-	  	$.ajax({
-	    	type: "PUT",
-	        url: "/todos/"+_id+"?_method=PUT",
-		});
-  }
-
-  function sendAjaxDelete(_id){
-        //Actual AJAX call
-      $.ajax({
-        type: "DELETE",
-          url: "/todos/"+_id+"?_method=DELETE",
-    });
-  }
-
-  function updateDoneCount(str){
-    var current = parseFloat($("#done-count").html());
-    if (str == "add"){
-      $("#done-count").html(current + 1);
-      $("#done").fadeIn();        
-    }
-    else if (str == "sub"){
-
-      if ((current - 1) == 0){
-        $("#done").fadeOut();        
-      }
-      $("#done-count").html(current - 1); 
-    }
-
-    //Post addition/subtraction
-    current = parseFloat($("#done-count").html());
-  }  
-  
-  function TodosComplete(){
-      $(".todos").on('click','.todo',function(e){
-      if ($(this).children('input').is(":checked")){
-        var _id = $(this).attr('data-id');
-        sendAjaxUpdate(_id);
-        updateDoneCount("add");
-      }
-    }); 
-  }
-
-  function TodonesUncomplete(){
-      $(".todones").on('click','.todone',function(e){
-      if ($(this).children('input').is(":checked") == false){
-        var _id = $(this).attr('data-id');
-        sendAjaxUpdate(_id);
-        updateDoneCount("sub");
-      }
-    }); 
-  }
-
-  function destroyTask(){
-      $(".todos").on('click','.remove',function(e){
-        var _id = $(this).parent().attr('data-id');
-        sendAjaxDelete(_id);
-      }); 
-  }
-
-  function TodonesToggler(){
-    $("#hide-toggle").click(function(){
-      $(".todones").fadeToggle();
-    });
-  }  
-
-  $(document).ready(function(){
-    TodosComplete();
-    TodonesUncomplete();
-    destroyTask();
-    TodonesToggler();
-    
-    $(".todos").sortable({ axis: "y" });
-
-
-    <% if @todones %>
-          <% if @todones.empty? %>
-            $("#done").css('display','none');    
-          <% end %>  
-    <% end %>
-
-    /*
-    setInterval(function(){
-      if ($(".todones li").filter(':visible').length == 0){
-        $("#done").fadeOut("fast"); 
-      }
-      else {
-        $("#done").fadeIn(); 
-      }
-    },1);
-    */
-    
-  });
-  </script>
 </body>
 </html>
