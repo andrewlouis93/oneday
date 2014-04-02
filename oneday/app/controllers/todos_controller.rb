@@ -28,6 +28,8 @@ class TodosController < ApplicationController
 	    end
 	end
 
+
+	# Could add another parms argument, and change what update does depending on this argument?
 	def update
 		@todo = Todo.find(params[:id])
 

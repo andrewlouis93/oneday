@@ -29,7 +29,7 @@ function getWeekData(){
 		var return_obj = [];
 		return_obj.push({
 			key: "Tasks From 7 Days Ago",
-			values: week_count
+			values: week_count.reverse()
 		});
 
 		return return_obj;		
@@ -53,21 +53,18 @@ $( document ).ready(function() {
 
 	  nv.utils.windowResize(chart.update);
 	  $(".nv-axis text").css('fill','white');
+	  return chart;
+	});
 
-
+	// Change nvd3 source? Figure out better place to put this 
+	setInterval(function(){
 		$( "text" ).each(function() {
-
 	  		var delimited_text = ($(this).html()).split(".");
 			if ( delimited_text.length == 2 ){
 				$(this).html( delimited_text[0] );
 			}
-		 	
-		});
-
-	  return chart;
-	});
-
-
+		});		
+	},100);
 
 });
 
