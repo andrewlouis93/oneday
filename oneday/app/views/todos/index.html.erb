@@ -72,7 +72,17 @@
 	    destroyTask();
 	    TodonesToggler();
 	    
-	    $(".todos").sortable({ axis: "y" });
+	    $(".todos").sortable({ 
+	    	axis: "y",
+	    	update:function(){
+			      $.ajax({
+			        url: '/todos/sort',
+			        type: 'post',
+			        data: $('.todos').sortable('serialize'),
+			        dataType: 'script'
+		    	});	    		
+	    	}
+		});
 
 
 	    <% if @todones %>

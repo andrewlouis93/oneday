@@ -62,12 +62,21 @@ class TodosController < ApplicationController
 	def about
 	end
 
+	def sort
+		@todos = Todo.where(done:false,user:current_user.email)
+		@todos.each do |todo|
+			todo.position = params['todo'].index(todo.id.to_s) + 1
+			todo.save
+		end
+		render :nothing => true
+	end
+
 	def stats
 		@today_data = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", Time.zone.now.beginning_of_day)
 		@today = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", Time.zone.now.beginning_of_day).size
 		
 		@week_data = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", 7.days.ago)
-		@week = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", Time.zone.now.beginning_of_week).size
+		@week = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", 7.days.ago).size
 		
 		@year_data = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", Time.zone.now.beginning_of_year)
 		@year = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", Time.zone.now.beginning_of_year).size

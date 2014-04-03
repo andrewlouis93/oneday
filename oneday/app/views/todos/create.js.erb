@@ -1,7 +1,7 @@
 <% if @todo.valid? %>
-	$('<%= j(render(@todo)) %>').hide().appendTo(".todos").fadeIn(500);
+	$('<%= j(render(@todo)) %>').hide().prependTo(".todos").fadeIn(500);
 	
- 	$('.todos').animate({scrollTop: $('.todos')[0].scrollHeight},700); 
+ 	/*$('.todos').animate({scrollTop: $('.todos')[0].scrollHeight},700); */
 	
 	console.log($(".todos li:last-child").filter(":visible").position().top);
 
