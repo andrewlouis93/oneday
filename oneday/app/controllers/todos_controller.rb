@@ -2,7 +2,7 @@ class TodosController < ApplicationController
 
 	def index
 		@todo = Todo.new
-		@todos = Todo.where(done:false,user:current_user.email)
+		@todos = Todo.where(done:false,user:current_user.email).order('position ASC')
 		@todones = Todo.where(done:true,user:current_user.email).order('updated_at DESC')
 		@todones = @todones.where("updated_at >= ?", Time.zone.now.beginning_of_day)
 	end
@@ -18,6 +18,7 @@ class TodosController < ApplicationController
 	# POST call to Todos goes here. This is why the form submit goes here on submission. http://stackoverflow.com/a/2472489/765409
 	def create
 		@todo = Todo.new(todo_params)
+	    
 	    respond_to do |format|
 	        if @todo.save
 	            format.js

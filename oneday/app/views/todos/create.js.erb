@@ -2,8 +2,15 @@
 	$('<%= j(render(@todo)) %>').hide().prependTo(".todos").fadeIn(500);
 	
  	/*$('.todos').animate({scrollTop: $('.todos')[0].scrollHeight},700); */
-	
-	console.log($(".todos li:last-child").filter(":visible").position().top);
+
+
+ 	/*Preserving order! Not even using acts_as_list*/
+	$.ajax({
+        url: '/todos/sort',
+        type: 'post',
+        data: $('.todos').sortable('serialize'),
+        dataType: 'script'
+	});	    		
 
 	$(".ajax_submit").val('')
 <% else %> 
