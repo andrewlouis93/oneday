@@ -73,13 +73,20 @@ class TodosController < ApplicationController
 	end
 
 	def stats
-		@today_data = Todo.where(done:true,user:current_user.email).where("updated_at >= :start_date AND updated_at <= :end_date", {start_date: Time.now.beginning_of_day, end_date: Time.now.end_of_day})
-		@today_count = @today_data.size
-		
-		@week_data = Todo.where(done:true,user:current_user.email).where("updated_at >= :week_bound AND updated_at <= :end_date", {week_bound: Time.now.advance({days: -7}), end_date: Time.now.end_of_day})
-		@week_count = @week_data.size
-		
-		@month_data = Todo.where(done:true,user:current_user.email).where("updated_at >= :start_date AND updated_at <= :end_date", {start_date: Time.now.beginning_of_year, end_date: Time.now.end_of_day})
-		@month_count = @month_data.size
+
+		@today_data = Todo.where(done:true,user:current_user.email).where("updated_at >= :start_date AND updated_at <= :end_date", {start_date: Time.zone.now.beginning_of_day, end_date: Time.zone.now.end_of_day})		
+		@week_data = Todo.where(done:true,user:current_user.email).where("updated_at >= :week_bound AND updated_at <= :end_date", {week_bound: Time.zone.now.advance({days: -7}), end_date: Time.zone.now.end_of_day})
+		@month_data = Todo.where(done:true,user:current_user.email).where("updated_at >= :start_date AND updated_at <= :end_date", {start_date: Time.zone.now.beginning_of_year, end_date: Time.zone.now.end_of_day})
+
+		@past_week_data = Array.new()
+		4.times do |i|
+			@past_week_data.push(Todo.where(done:true,user:current_user.email).where("updated_at >= :week_bound AND updated_at <= :end_date", { week_bound: Date.today.beginning_of_week - (7*i).days, end_date: Date.today.end_of_week - (7*i).days }))
+		end
+
+		@this_year_data = Array.new()
+		Date.today.month.downto(1) do |i|
+			@this_year_data.push(  Todo.where(done:true,user:current_user.email).where("updated_at >= :week_bound AND updated_at <= :end_date", { week_bound: Date.today.beginning_of_month - (4 - 1*i).month, end_date: Date.today.end_of_month - (4 - 1*i).month })  )
+		end
+
 	end
 end

@@ -60,12 +60,11 @@ text {
 	margin-top: 27px;
 }
 
-.font-400 {
-	font-weight:100;
-	font-size:1.1em;
+.tab_color{
+	color: #eee;
 }
 
-.font-400 p{
+.font-400, .font-400 p {
 	font-weight:100;
 	font-size:1.1em;
 }

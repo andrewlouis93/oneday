@@ -1,8 +1,32 @@
 <script>
 
+function activeTab($this){
+		$('.nav-tabs li').removeClass('active');
+		$this.addClass('active');	
+}
+
+// Submenu control
+$(document).on('click', '.nav-tabs li', function(event){
+	if ($(this).hasClass('active')){
+		console.log("mah here");
+		return;
+	}
+	else if ($(this).attr('id') == 'week_graph'){
+		drawGraph( getWeekGraphValues() );
+		activeTab($(this));
+	}
+	else if ($(this).attr('id') == 'month_graph'){
+		drawGraph( getMonthGraphValues() );
+		activeTab($(this));
+	}
+	else if ($(this).attr('id') == 'year_graph'){
+		drawGraph( getYearlyGraphValues() );
+		activeTab($(this));
+	}
+});
+
 // Camel Case - structures used in graphing/analysis
 // Underscores - intermediates
-
 function DateObj(iso8601){
 	// Look into how the unary operator works.
 	this.date = +moment(iso8601).format('D');
@@ -14,17 +38,51 @@ function DateObj(iso8601){
 }
 
 function setupGraphValues_Week(){
-		var weekGraphVals = [];
+	var weekGraphVals = [];
+	for ( var i = 0; i < 7; i++ ){
+		//Walking back seven days. 
+		var currDate = moment().subtract('days', i);
+		var tempDate = new DateObj(currDate.format());
+		weekGraphVals.push( tempDate );
+	}
+	return weekGraphVals;
+}
 
+function setupGraphValues_Month(){
+	var monthlyGraphVals = [];
+	var values = ['This week', '1 week ago', '2 weeks ago', '3 weeks ago'];
 
-		for (var i = 0; i < 7; i++){
-			//Walking back seven days. 
-			var currDate = moment().subtract('days', i);
-			var tempDate = new DateObj(currDate.format());
-			weekGraphVals.push( tempDate );
+	for ( var i = 0; i < values.length; i++ ){
+		var obj = {label: values[i], values: []};
+		obj.values = $("#past_week_data_"+ i +"").data('url');
+		// Changing values from regular objects to DateObjs.
+		for ( var j = 0; j < obj.values.length; j++ ){
+			var task = obj.values[j].name;
+			obj.values[j] = new DateObj( obj.values[j].updated_at );
+			obj.values[j].task_list.push( task );
 		}
+		monthlyGraphVals.push( obj );
+	}
+	return monthlyGraphVals;
+}
 
-		return weekGraphVals;
+function setupGraphValues_Year(){
+	var yearlyGraphVals = [];
+
+	var values = ($('#this_year_data').data('url').reverse()).slice(0);
+
+	for ( var i = 0; i < values.length; i++ ){
+		var obj = { label: moment( String(i+1) ).format('MMMM'), values: [] };
+		//Changing values from regualr objects to DateObjs
+		for (var j = 0; j < values[i].length; j++){
+			var task = values[i][j].name;
+			values[i][j] = new DateObj( values[i][j].updated_at );
+			values[i][j].task_list.push( task );
+			obj.values.push( values[i][j] )
+		}
+		yearlyGraphVals.push( obj );
+	}
+	return yearlyGraphVals;
 }
 
 function updateCount( db_entry, graphValues ){
@@ -48,8 +106,6 @@ function updateCount( db_entry, graphValues ){
 
 }
 
-
-
 function getWeekData(){
 
 	var weekGraphValues = setupGraphValues_Week();
@@ -59,10 +115,8 @@ function getWeekData(){
 		updateCount( entry , weekGraphValues );
 	});
 
-
 	return weekGraphValues;	
 }
-
 // Format the raw data like so for nvd3	
 // {key: "Title", values: [{label: "...", value: 10},{...},{...}]}
 function getWeekGraphValues(){
@@ -84,9 +138,45 @@ function getWeekGraphValues(){
 	return [toGraph];
 }
 
+function getMonthGraphValues(){
+	var raw = setupGraphValues_Month();
 
-$( document ).ready(function() {
-    
+	var toGraph = {};
+	toGraph.key = "Tasks from the Last Month";
+	toGraph.values = [];
+
+	_.each(raw, function(entry){
+		var obj = {
+			label: entry.label,
+			value: entry.values.length
+		};
+		toGraph.values.push( obj );
+	});
+
+	toGraph.values.reverse();
+	return [toGraph];
+}
+
+function getYearlyGraphValues(){
+	var raw = setupGraphValues_Year();
+
+	var toGraph = {};
+	toGraph.key = "Tasks from the Last Year";
+	toGraph.values = [];
+
+	_.each(raw, function(entry){
+		var obj = {
+			label: entry.label,
+			value: entry.values.length
+		};
+		toGraph.values.push( obj );
+	});
+	
+	return [toGraph];
+}
+
+function drawGraph( src ){
+
 	nv.addGraph(function() {
 	  var chart = nv.models.discreteBarChart()
 	      .x(function(d) { return d.label })    //Specify the data accessors.
@@ -98,13 +188,18 @@ $( document ).ready(function() {
 	      ;
 
 	  d3.select('#graph_container svg')
-	      .datum( getWeekGraphValues() )
+	      .datum( src )
 	      .call(chart);
 
 	  nv.utils.windowResize(chart.update);
 	  $(".nv-axis text").css('fill','white');
 	  return chart;
-	});
+	});	
+}
+
+$( document ).ready(function() {
+
+	drawGraph( getWeekGraphValues() );
 
 	// Change nvd3 source? Figure out better place to put this 
 	setInterval(function(){
@@ -126,6 +221,16 @@ $( document ).ready(function() {
 <% end %>
 <%= content_tag "div", id: "year_data", data: {url: @year_data } do %>
 <% end %>
+<%= content_tag "div", id: "past_week_data_0", data: {url: @past_week_data[0] } do %>
+<% end %>
+<%= content_tag "div", id: "past_week_data_1", data: {url: @past_week_data[1] } do %>
+<% end %>
+<%= content_tag "div", id: "past_week_data_2", data: {url: @past_week_data[2] } do %>
+<% end %>
+<%= content_tag "div", id: "past_week_data_3", data: {url: @past_week_data[3] } do %>
+<% end %>
+<%= content_tag "div", id: "this_year_data", data: {url: @this_year_data } do %>
+<% end %>
 <div style="color:white;"class="container ">
 	<div class="page-header">
   		<h1>My Statistics <small></small></h1>
@@ -135,30 +240,30 @@ $( document ).ready(function() {
 		  	<h3>Today</h3>
 			<hr>
 		  	<div id="today" class="count">
-		  		<%= @today_count %>
+		  		<%= @today_data.size %>
 		  	</div>
 		  </div>
 		  <div class="col-xs-6 col-sm-4">
 		  	<h3>The Last 7 Days</h3>
 			<hr>
 		  	<div id="week" class="count">
-				<%= @week_count %>
+				<%= @week_data.size %>
 		  	</div>
 		  </div>
 		  <div class="col-xs-12 col-sm-4">
 		  	<h3>This Month</h3>
 			<hr>
 		  	<div id="month" class="count">
-				<%= @month_count %>
+				<%= @month_data.size %>
 		  	</div>
 		  </div>		  
 	</div>
 	<div class="row graph_tabs">
 		<div class="col-xs-12 col-sm-12">
 			<ul class="nav nav-tabs">
-			  <li class="active"><a data-toggle="tab">Last 7 Days</a></li>
-			  <li><a data-toggle="tab">This Month</a></li>
-			  <li><a data-toggle="tab">This Year</a></li>
+			  <li id='week_graph' class="active"><a class="tab_color">Last 7 Days</a></li>
+			  <li id='month_graph'><a class="tab_color" >This Month</a></li>
+			  <li id='year_graph'><a class="tab_color" >This Year</a></li>
 			</ul>	
 		</div>
 	</div>
