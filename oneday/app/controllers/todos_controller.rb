@@ -4,7 +4,7 @@ class TodosController < ApplicationController
 		@todo = Todo.new
 		@todos = Todo.where(done:false,user:current_user.email).order('position ASC')
 		@todones = Todo.where(done:true,user:current_user.email).order('updated_at DESC')
-		@todones = @todones.where("updated_at >= ?", Time.zone.now.beginning_of_day)
+		@todones = @todones.where("updated_at >= ?", Time.now.beginning_of_day)
 	end
 
 	def new
@@ -73,13 +73,13 @@ class TodosController < ApplicationController
 	end
 
 	def stats
-		@today_data = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", Time.zone.now.beginning_of_day)
-		@today = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", Time.zone.now.beginning_of_day).size
+		@today_data = Todo.where(done:true,user:current_user.email).where("updated_at >= :start_date AND updated_at <= :end_date", {start_date: Time.now.beginning_of_day, end_date: Time.now.end_of_day})
+		@today_count = @today_data.size
 		
-		@week_data = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", 7.days.ago)
-		@week = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", 7.days.ago).size
+		@week_data = Todo.where(done:true,user:current_user.email).where("updated_at >= :week_bound AND updated_at <= :end_date", {week_bound: Time.now.advance({days: -7}), end_date: Time.now.end_of_day})
+		@week_count = @week_data.size
 		
-		@year_data = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", Time.zone.now.beginning_of_year)
-		@year = Todo.where(done:true,user:current_user.email).where("updated_at >= ?", Time.zone.now.beginning_of_year).size
+		@month_data = Todo.where(done:true,user:current_user.email).where("updated_at >= :start_date AND updated_at <= :end_date", {start_date: Time.now.beginning_of_year, end_date: Time.now.end_of_day})
+		@month_count = @month_data.size
 	end
 end

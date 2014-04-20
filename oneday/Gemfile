@@ -5,7 +5,11 @@ gem 'rails', '4.0.3'
 
 gem 'rails_12factor', group: :production
 
+# PostGre-SQL
 gem 'pg'
+
+# Underscore.js
+gem 'underscore-rails'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

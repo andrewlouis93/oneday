@@ -1,39 +1,89 @@
 <script>
+
+// Camel Case - structures used in graphing/analysis
+// Underscores - intermediates
+
+function DateObj(iso8601){
+	// Look into how the unary operator works.
+	this.date = +moment(iso8601).format('D');
+	this.month = +moment(iso8601).format('M');
+	this.year = +moment(iso8601).format('YYYY');
+	this.day = moment(iso8601).format('dddd');
+
+	this.task_list = [];
+}
+
+function setupGraphValues_Week(){
+		var weekGraphVals = [];
+
+
+		for (var i = 0; i < 7; i++){
+			//Walking back seven days. 
+			var currDate = moment().subtract('days', i);
+			var tempDate = new DateObj(currDate.format());
+			weekGraphVals.push( tempDate );
+		}
+
+		return weekGraphVals;
+}
+
+function updateCount( db_entry, graphValues ){
+
+	var iso8601 = db_entry.updated_at;
+
+	// Date to add one task to
+	var addTo = new DateObj( iso8601 );
+
+	var findVal = _.findWhere( graphValues, { 
+		date: addTo.date,
+		month: addTo.month,
+		year: addTo.year
+	 } );
+
+	//If entry found, and it should unless you designed wrong.
+	if (findVal){
+		// Rets shallow copy, so we can modify graphValues from here
+		findVal.task_list.push( db_entry.name ); 
+	}
+
+}
+
+
+
 function getWeekData(){
 
-	var week_count = [];
-		for (var i = 0; i < 7; i++){
-			week_count.push({ 
-							 "label" : moment().subtract('days',i).format('dddd'),
-							 "value" : 0
-			});
-		}
+	var weekGraphValues = setupGraphValues_Week();
+	var week_data = $('#week_data').data('url');
 
-		function updateCount(weekc, weekday){
-			for (var i = 0; i < weekc.length; i++){
-				if ( weekc[i].label == weekday ){
-					weekc[i].value += 1;
-					break;
-				}
-			}
-		}
+	_.each( week_data, function( entry ){
+		updateCount( entry , weekGraphValues );
+	});
 
-		var week_data = $("#week_data").data("url");
-		
-		console.log(week_data.length);
-		for (var i = 0; i < week_data.length; i ++){ 
-			updateCount( week_count, moment(week_data[i].updated_at).format('dddd') )
-		}
 
-		
-		var return_obj = [];
-		return_obj.push({
-			key: "Tasks From 7 Days Ago",
-			values: week_count.reverse()
-		});
-
-		return return_obj;		
+	return weekGraphValues;	
 }
+
+// Format the raw data like so for nvd3	
+// {key: "Title", values: [{label: "...", value: 10},{...},{...}]}
+function getWeekGraphValues(){
+	var raw = getWeekData();
+	var toGraph = {};
+
+	toGraph.key = "Tasks from the Last 7 Days";
+	toGraph.values = [];
+
+	_.each(raw, function(entry){
+		var obj = {     
+						label: entry.day,
+						value: entry.task_list.length
+				  };
+		toGraph.values.push( obj );
+	});
+
+	toGraph.values.reverse();
+	return [toGraph];
+}
+
 
 $( document ).ready(function() {
     
@@ -48,7 +98,7 @@ $( document ).ready(function() {
 	      ;
 
 	  d3.select('#graph_container svg')
-	      .datum( getWeekData() )
+	      .datum( getWeekGraphValues() )
 	      .call(chart);
 
 	  nv.utils.windowResize(chart.update);
@@ -85,21 +135,21 @@ $( document ).ready(function() {
 		  	<h3>Today</h3>
 			<hr>
 		  	<div id="today" class="count">
-		  		<%= @today %>
+		  		<%= @today_count %>
 		  	</div>
 		  </div>
 		  <div class="col-xs-6 col-sm-4">
 		  	<h3>The Last 7 Days</h3>
 			<hr>
 		  	<div id="week" class="count">
-				<%= @week %>
+				<%= @week_count %>
 		  	</div>
 		  </div>
 		  <div class="col-xs-12 col-sm-4">
 		  	<h3>This Month</h3>
 			<hr>
 		  	<div id="month" class="count">
-				<%= @year %>
+				<%= @month_count %>
 		  	</div>
 		  </div>		  
 	</div>
@@ -107,10 +157,8 @@ $( document ).ready(function() {
 		<div class="col-xs-12 col-sm-12">
 			<ul class="nav nav-tabs">
 			  <li class="active"><a data-toggle="tab">Last 7 Days</a></li>
-			  <!--
 			  <li><a data-toggle="tab">This Month</a></li>
 			  <li><a data-toggle="tab">This Year</a></li>
-			  -->
 			</ul>	
 		</div>
 	</div>
