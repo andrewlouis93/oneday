@@ -8,9 +8,9 @@
 
 
 
-# yourUser = User.new(email: "andrew.louis93@gmail.com", password: "fawkes.1234", )
-# 14.downto(0) do |i|
-#   todo = Todo.new(done:true,user: "andrew.louis93@gmail.com")
-#   todo.updated_at = Time.now.advance({days: - i})
-#   todo.save!
-# end
+yourUser = User.new(email: "andrew.louis93@gmail.com", password: "fawkes.1234", )
+14.downto(0) do |i|
+  todo = Todo.new(done:true,user: "andrew.louis93@gmail.com",name:"GUCCIGUCCI")
+  todo.updated_at = Time.now.advance({days: - i})
+  todo.save!
+end

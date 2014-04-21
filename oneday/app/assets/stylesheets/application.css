@@ -46,9 +46,20 @@ text {
 	font-weight: 100;
 }
 
+rect:hover{
+	opacity: 0.7;
+	cursor: pointer;
+}
+
 #graph_container {
+	margin-left: -22px;
 	height: 210px;	
 }
+
+#graph_container > svg > g > g > g.nv-y.nv-axis > g.nvd3.nv-wrap.nv-axis > g:nth-child(1), #graph_container > svg > g > g > g.nv-y.nv-axis > g.nvd3.nv-wrap.nv-axis > g:nth-child(2), #graph_container > svg > g > g > g.nv-y.nv-axis > g.nvd3.nv-wrap.nv-axis > g:nth-child(3){
+	display: none;
+}
+
 
 .count {
 	width: 100%;
@@ -356,4 +367,17 @@ li.todone {
 
 #hide-toggle:hover{
 	cursor: pointer;
+}
+
+.modal-override{
+	overflow-y: auto;
+	height: 463px !important;
+}
+
+.modal-width-override{
+	width: 45% !important;
+}
+
+.list-group-item{
+	font-weight: 100;
 }

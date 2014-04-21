@@ -5,6 +5,37 @@ function activeTab($this){
 		$this.addClass('active');	
 }
 
+// Grabbing title!
+function pad(n) {
+    if (n < 10)
+        return "0" + n;
+    return String(n);
+}
+
+function insertList_Week( bar_element ){
+
+	$(".modal").modal();
+	var str = pad(bar_element.year) + pad(bar_element.month) + pad(bar_element.date);
+	var title = moment(str, "YYYYMMDD").format("dddd, MMMM Do");
+	// Grabbing title for modal
+	$(".modal-title").html(title);
+
+	for (var i = 0; i < bar_element.task_list.length; i++){
+
+		var text =  bar_element.task_list[i];
+
+		var element = "<li class='list-group-item'>"+ text +"</li>";
+		$("#tasks_go_here").append(element);
+	} 
+	// Populating the list
+	// var element = "<li class='list-group-item'><span class='badge'>"+ time +"</span>"+ text +"</li>";
+}
+
+function insertList_Month ( bar_element ){
+	$(".modal").modal();
+	console.log(bar_element);
+}
+
 // Submenu control
 $(document).on('click', '.nav-tabs li', function(event){
 	if ($(this).hasClass('active')){
@@ -23,6 +54,32 @@ $(document).on('click', '.nav-tabs li', function(event){
 		drawGraph( getYearlyGraphValues() );
 		activeTab($(this));
 	}
+}).on('click','.nv-series-0 g', function(e){
+	var active = $(".active").attr('id');
+	var idx = $(this).index();
+	var title;
+
+	if (active == "week_graph"){
+		var vals = getWeekData();
+		var _day = $($('text').get(idx)).html();
+		title = _day;
+		var foundItem = _.findWhere(vals, { day: _day });
+		insertList_Week( foundItem );
+	}
+	else if (active == "month_graph"){
+		var vals = setupGraphValues_Month().reverse();
+		var _item = $($('text').get(idx)).html();
+		title = _item;
+		var foundItem = _.findWhere(vals, { label: _item });
+	}
+	else if (active == "year_graph"){
+		var vals = setupGraphValues_Year();
+		var _month =  $($('text').get(idx)).html();
+		title = _month;
+		var foundItem = _.findWhere(vals, { label: _month });
+	}
+}).on('click', '.close', function(e){
+	$("#tasks_go_here").html("");
 });
 
 // Camel Case - structures used in graphing/analysis
@@ -33,7 +90,6 @@ function DateObj(iso8601){
 	this.month = +moment(iso8601).format('M');
 	this.year = +moment(iso8601).format('YYYY');
 	this.day = moment(iso8601).format('dddd');
-
 	this.task_list = [];
 }
 
@@ -68,8 +124,8 @@ function setupGraphValues_Month(){
 
 function setupGraphValues_Year(){
 	var yearlyGraphVals = [];
-
-	var values = ($('#this_year_data').data('url').reverse()).slice(0);
+	var values = ($('#this_year_data').data('url')).slice(0);
+	values = values.reverse();
 
 	for ( var i = 0; i < values.length; i++ ){
 		var obj = { label: moment( String(i+1) ).format('MMMM'), values: [] };
@@ -201,15 +257,9 @@ $( document ).ready(function() {
 
 	drawGraph( getWeekGraphValues() );
 
-	// Change nvd3 source? Figure out better place to put this 
-	setInterval(function(){
-		$( "text" ).each(function() {
-	  		var delimited_text = ($(this).html()).split(".");
-			if ( delimited_text.length == 2 ){
-				$(this).html( delimited_text[0] );
-			}
-		});		
-	},100);
+	$('.modal').on('hidden.bs.modal', function (e) {
+	  $("#tasks_go_here").html("");
+	})
 
 });
 
@@ -231,6 +281,26 @@ $( document ).ready(function() {
 <% end %>
 <%= content_tag "div", id: "this_year_data", data: {url: @this_year_data } do %>
 <% end %>
+
+
+<div class="modal fade">
+  <div class="modal-dialog modal-width-override">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Placeholder<!-- THE DAY / WEEK / MONTH GOES HERE --></h4>
+      </div>
+      <div class="modal-body modal-override">
+		<ul id='tasks_go_here' class="list-group">			  		  		  		  		  		    
+		</ul>
+      </div>
+      <div class="modal-footer">
+      	<!-- Footer shit here -->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div style="color:white;"class="container ">
 	<div class="page-header">
   		<h1>My Statistics <small></small></h1>
