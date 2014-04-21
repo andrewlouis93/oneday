@@ -20,6 +20,8 @@ function insertList_Week( bar_element ){
 	// Grabbing title for modal
 	$(".modal-title").html(title);
 
+	console.log( bar_element );
+
 	for (var i = 0; i < bar_element.task_list.length; i++){
 
 		var text =  bar_element.task_list[i];
@@ -33,7 +35,32 @@ function insertList_Week( bar_element ){
 
 function insertList_Month ( bar_element ){
 	$(".modal").modal();
-	console.log(bar_element);
+	$(".modal-title").html(bar_element.label);
+	
+	console.log( bar_element );
+
+	var allElements = _.pluck(bar_element.values, "task_list");
+	_.each(allElements, function(arr){
+		_.each(arr, function(el){
+			var element = "<li class='list-group-item'>"+ el +"</li>";
+			$("#tasks_go_here").append(element);
+		});
+	});
+}
+
+// Just before testing, see how things get assigned to task_list!!!
+function insertList_Year( bar_element ){
+	$(".modal").modal();
+	$(".modal-title").html(  bar_element.label  );
+
+	var allElements = _.pluck(bar_element.values, "task_list");
+	console.log(allElements);
+	_.each(allElements, function(arr){
+		_.each(arr, function(el){
+			var element = "<li class='list-group-item'>"+ el +"</li>";
+			$("#tasks_go_here").append(element);
+		});
+	});
 }
 
 // Submenu control
@@ -71,12 +98,15 @@ $(document).on('click', '.nav-tabs li', function(event){
 		var _item = $($('text').get(idx)).html();
 		title = _item;
 		var foundItem = _.findWhere(vals, { label: _item });
+		insertList_Month( foundItem );
 	}
 	else if (active == "year_graph"){
 		var vals = setupGraphValues_Year();
 		var _month =  $($('text').get(idx)).html();
 		title = _month;
 		var foundItem = _.findWhere(vals, { label: _month });
+
+		insertList_Year( foundItem );
 	}
 }).on('click', '.close', function(e){
 	$("#tasks_go_here").html("");
@@ -106,11 +136,12 @@ function setupGraphValues_Week(){
 
 function setupGraphValues_Month(){
 	var monthlyGraphVals = [];
-	var values = ['This week', '1 week ago', '2 weeks ago', '3 weeks ago'];
+	var values = ['This Week', '1 Week Ago', '2 Weeks Ago', '3 Weeks Ago'];
 
 	for ( var i = 0; i < values.length; i++ ){
-		var obj = {label: values[i], values: []};
-		obj.values = $("#past_week_data_"+ i +"").data('url');
+		var obj = {  label: values[i], values: []  };
+		obj.values = ($("#past_week_data_"+ i +"").data('url')).slice(0);
+
 		// Changing values from regular objects to DateObjs.
 		for ( var j = 0; j < obj.values.length; j++ ){
 			var task = obj.values[j].name;
@@ -118,26 +149,28 @@ function setupGraphValues_Month(){
 			obj.values[j].task_list.push( task );
 		}
 		monthlyGraphVals.push( obj );
+		
 	}
 	return monthlyGraphVals;
 }
 
 function setupGraphValues_Year(){
 	var yearlyGraphVals = [];
-	var values = ($('#this_year_data').data('url')).slice(0);
-	values = values.reverse();
+	var year = (new Date()).getFullYear();
+
+	var values = ($('#this_year_data').data('url')).slice(0).reverse();
 
 	for ( var i = 0; i < values.length; i++ ){
-		var obj = { label: moment( String(i+1) ).format('MMMM'), values: [] };
+		var obj = { label: moment( String(i+1) ).format('MMMM') + ", " + year, values: [] };
 		//Changing values from regualr objects to DateObjs
 		for (var j = 0; j < values[i].length; j++){
 			var task = values[i][j].name;
-			values[i][j] = new DateObj( values[i][j].updated_at );
-			values[i][j].task_list.push( task );
-			obj.values.push( values[i][j] )
+			obj.values[j] = new DateObj(values[i][j].updated_at);
+			obj.values[j].task_list.push(task);
 		}
 		yearlyGraphVals.push( obj );
 	}
+	console.log(yearlyGraphVals);
 	return yearlyGraphVals;
 }
 
@@ -314,14 +347,14 @@ $( document ).ready(function() {
 		  	</div>
 		  </div>
 		  <div class="col-xs-6 col-sm-4">
-		  	<h3>The Last 7 Days</h3>
+		  	<h3>Last 7 Days</h3>
 			<hr>
 		  	<div id="week" class="count">
 				<%= @week_data.size %>
 		  	</div>
 		  </div>
 		  <div class="col-xs-12 col-sm-4">
-		  	<h3>This Month</h3>
+		  	<h3>Last 4 Weeks</h3>
 			<hr>
 		  	<div id="month" class="count">
 				<%= @month_data.size %>
@@ -332,7 +365,7 @@ $( document ).ready(function() {
 		<div class="col-xs-12 col-sm-12">
 			<ul class="nav nav-tabs">
 			  <li id='week_graph' class="active"><a class="tab_color">Last 7 Days</a></li>
-			  <li id='month_graph'><a class="tab_color" >This Month</a></li>
+			  <li id='month_graph'><a class="tab_color" >Last 4 Weeks</a></li>
 			  <li id='year_graph'><a class="tab_color" >This Year</a></li>
 			</ul>	
 		</div>

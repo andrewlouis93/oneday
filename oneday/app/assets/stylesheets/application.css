@@ -34,7 +34,7 @@ ul li a {
 }
 
 input[type=checkbox] {
-	margin-top: 0px !important;
+	margin-top: 1px !important;
 	margin-right: 11px !important;
 	margin-bottom: 0 !important;
 	float: left; 
@@ -77,7 +77,7 @@ rect:hover{
 
 .font-400, .font-400 p {
 	font-weight:100;
-	font-size:1.1em;
+	font-size: 1em;
 }
 
 .container input{
@@ -99,6 +99,25 @@ rect:hover{
 }
 
 @media (max-width: 540px) and (min-width: 0px) { 
+	#forgot_password_form {
+		width:90%;
+		height: 210px;
+	}
+
+	#forgot_password_form button{
+		font-size :em;
+	}
+
+	#sign_in_form {
+		width: 90%%;
+		height: 250px;
+	}
+
+	#sign_up_form {
+		width:90%;
+		height: 250px;
+	}	
+
 	#sign_container {
 		margin-top:20%;
 		display: inline-block;
@@ -115,6 +134,21 @@ rect:hover{
 }
 
 @media (max-width: 740px) and (min-width: 540px) { 
+	#forgot_password_form {
+		width:75%;
+		height: 210px;
+	}	
+
+	#sign_in_form {
+		width: 75%;
+		height: 250px;
+	}
+
+	#sign_up_form {
+		width:75%;
+		height: 250px;
+	}
+
 	#sign_container {
 		margin-top:20%;
 		display: inline-block;
@@ -130,7 +164,22 @@ rect:hover{
 	}	
 }
 
-@media (max-width: 1024px) and (min-width: 740px) { 
+@media (max-width: 990px) and (min-width: 740px) { 
+	#forgot_password_form {
+		width:65%;
+		height: 210px;
+	}
+
+	#sign_up_form {
+		width:65%;
+		height: 250px;
+	}	
+
+	#sign_in_form {
+		width: 65%;
+		height: 250px;
+	}
+
 	#sign_container {
 		margin-top:20%;
 		display: inline-block;
@@ -150,7 +199,22 @@ rect:hover{
 	}
 }
 
-@media (min-width: 1024px) { 
+@media (min-width: 990px) { 
+	#forgot_password_form {
+		width:45%;
+		height: 210px;
+	}
+
+	#sign_up_form {
+		width:45%;
+		height: 250px;
+	}
+
+	#sign_in_form {
+		width: 45%;
+		height: 250px;
+	}
+
 	#sign_container {
 		margin-top:20%;
 		display: inline-block;
@@ -226,21 +290,6 @@ rect:hover{
 	background:rgba(0,0,0,0.4);
 }
 
-#sign_in_form {
-	width: 50%;
-	height: 250px;
-}
-
-#sign_up_form {
-	width:50%;
-	height: 250px;
-}
-
-#forgot_password_form {
-	width:50%;
-	height: 210px;
-}
-
 .help-block-override {
 	margin-top:5px;
 	margin-left:20px;
@@ -264,12 +313,14 @@ rect:hover{
 	margin-top:	3%;
 	margin-left:auto;
 	margin-right:auto;
-	width:60%;
+	width:80%;
 }
 
 
 
-@media (max-width: 768px) and (min-width: 0px) { 
+@media (max-width: 736px) and (min-width: 0px) { 
+
+
 	.task_bar {
 		margin-left:auto !important;
 		margin-right:auto !important;
@@ -280,9 +331,18 @@ rect:hover{
 		height: 249px;
 		overflow-y: auto;	
 	}
+
+	.main_container {
+		margin-top:	3%;
+		margin-left:auto;
+		margin-right:auto;
+		width:80%;
+	}
+
+
 }
 
-@media (min-width: 768px) { 
+@media (min-width: 736px) { 
 	.task_bar {
 		margin-left:auto !important;
 		margin-right:auto !important;
@@ -294,6 +354,14 @@ rect:hover{
 		height: 267px;
 		overflow-y: auto;	
 	}
+
+	.main_container {
+		margin-top:	3%;
+		margin-left:auto;
+		margin-right:auto;
+		width:60%;
+	}
+
 }
 
 .task_bar input {
