@@ -12,6 +12,12 @@ function pad(n) {
     return String(n);
 }
 
+function htmlEncode(value){
+  //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+  //then grab the encoded contents back out.  The div never exists on the page.
+  return $('<div/>').text(value).html();
+}
+
 function insertList_Week( bar_element ){
 
 	$(".modal").modal();
@@ -19,14 +25,13 @@ function insertList_Week( bar_element ){
 	var title = moment(str, "YYYYMMDD").format("dddd, MMMM Do");
 	// Grabbing title for modal
 	$(".modal-title").html(title);
-
-	console.log( bar_element );
+	$("#tasks_go_here").html("");
 
 	for (var i = 0; i < bar_element.task_list.length; i++){
 
 		var text =  bar_element.task_list[i];
 
-		var element = "<li class='list-group-item'>"+ text +"</li>";
+		var element = "<li class='list-group-item'>"+ htmlEncode( text ) +"</li>";
 		$("#tasks_go_here").append(element);
 	} 
 	// Populating the list
@@ -36,13 +41,14 @@ function insertList_Week( bar_element ){
 function insertList_Month ( bar_element ){
 	$(".modal").modal();
 	$(".modal-title").html(bar_element.label);
+	$("#tasks_go_here").html("");
 	
 	console.log( bar_element );
 
 	var allElements = _.pluck(bar_element.values, "task_list");
 	_.each(allElements, function(arr){
 		_.each(arr, function(el){
-			var element = "<li class='list-group-item'>"+ el +"</li>";
+			var element = "<li class='list-group-item'>"+ htmlEncode( el ) +"</li>";
 			$("#tasks_go_here").append(element);
 		});
 	});
@@ -52,12 +58,13 @@ function insertList_Month ( bar_element ){
 function insertList_Year( bar_element ){
 	$(".modal").modal();
 	$(".modal-title").html(  bar_element.label  );
+	$("#tasks_go_here").html("");
 
 	var allElements = _.pluck(bar_element.values, "task_list");
 	console.log(allElements);
 	_.each(allElements, function(arr){
 		_.each(arr, function(el){
-			var element = "<li class='list-group-item'>"+ el +"</li>";
+			var element = "<li class='list-group-item'>"+ htmlEncode( el ) +"</li>";
 			$("#tasks_go_here").append(element);
 		});
 	});

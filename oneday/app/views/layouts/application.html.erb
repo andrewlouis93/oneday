@@ -6,7 +6,10 @@
   
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  
+    <!-- Graphing shit -->
+  <script src="https://cdn.rawgit.com/alouis93/oneday/master/oneday/app/assets/javascripts/nv.d3.js"></script> 
+    
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
@@ -25,8 +28,7 @@
   <!-- Support for touch devices -->
   <script src="//cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
-  <!-- Graphing shit -->
-  <%= javascript_include_tag "nv.d3.js", "data-turbolinks-track" => true %>
+
 
   <!-- Time support -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
